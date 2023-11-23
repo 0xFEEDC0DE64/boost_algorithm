@@ -3,6 +3,8 @@
 # Distributed under the Boost Software License, Version 1.0.
 # https://www.boost.org/LICENSE_1_0.txt
 
+if(NOT DEFINED IDF_TARGET)
+
 cmake_minimum_required(VERSION 3.5...3.16)
 
 project(boost_algorithm VERSION "${BOOST_SUPERPROJECT_VERSION}" LANGUAGES CXX)
@@ -39,3 +41,33 @@ if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt")
 
 endif()
 
+else()
+
+FILE(GLOB_RECURSE headers include/*.h include/*.hpp)
+
+idf_component_register(
+    SRCS
+        ${headers}
+    INCLUDE_DIRS
+        include
+    REQUIRES
+        boost_array
+        boost_assert
+        boost_bind
+        boost_concept_check
+        boost_config
+        boost_core
+        boost_exception
+        boost_function
+        boost_iterator
+        boost_mpl
+        boost_range
+        boost_regex
+        boost_static_assert
+        boost_throw_exception
+        boost_tuple
+        boost_type_traits
+        boost_unordered
+)
+
+endif()
